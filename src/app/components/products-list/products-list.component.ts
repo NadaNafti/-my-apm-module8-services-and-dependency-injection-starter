@@ -20,7 +20,11 @@ export class ProductsListComponent implements OnInit {
   constructor(private _serviceProduit: ProductsService) { } // Dependency injection !
 
   ngOnInit() {
-    this.products = this._serviceProduit.getAllProducts();
+    this._serviceProduit.getAllProducts().subscribe(
+      res => { this.products = res; },
+      err => console.log(`ATTENTION: Il y a une erreur: ${err} lors de l'appel REST`),
+      () => {  } // onComplete
+    );
   }
   toggleImage(): void {
     this.showImage = !this.showImage;
